@@ -1,0 +1,146 @@
+---
+title: 'Controllers'
+description: 'Documentation for all Laravel controllers in the InStore Reviews system'
+---
+
+# Controllers
+
+This section documents all the controllers in the InStore Reviews system, their purposes, and key functionalities.
+
+## Core Controllers
+
+### QR Code Management
+
+#### `QrMediaController`
+Handles all QR code media operations including:
+- QR code generation
+- Template management
+- Media storage and retrieval
+
+#### `QrScanController`
+Manages QR code scanning functionality:
+- Scan validation
+- Tracking scan analytics
+- Processing scan events
+
+#### `QrReviewController`
+Processes customer reviews through QR codes:
+- Review submission
+- Rating management
+- Feedback processing
+
+### Business Management
+
+#### `BusinessController`
+Manages business-related operations:
+- Business profile management
+- Settings configuration
+- Business analytics
+
+#### `LocationController`
+Handles location-specific functionality:
+- Location management
+- Location-based QR codes
+- Geographic tracking
+
+### User Management
+
+#### `UsersController`
+Manages user-related operations:
+- User profile management
+- User preferences
+- Account settings
+
+#### `RolePermissionController`
+Handles role-based access control:
+- Role assignment
+- Permission management
+- Access control
+
+### Analytics and Reporting
+
+#### `AnalyticsController`
+Processes and generates analytics:
+- Feedback statistics
+- Usage metrics
+- Performance reports
+
+#### `QrScanSettingAnalyticController`
+Manages QR scan analytics:
+- Scan statistics
+- Usage patterns
+- Performance metrics
+
+### Notifications
+
+#### `NotificationsController`
+Handles all notification systems:
+- SMS alerts
+- Email notifications
+- System alerts
+
+#### `TwilioWebhookController`
+Manages Twilio SMS integration:
+- SMS delivery
+- Webhook processing
+- Status updates
+
+### Platform Integration
+
+#### `LocationPlatformsController`
+Manages integration with various platforms:
+- Social media connections
+- Third-party integrations
+- Platform-specific settings
+
+## Directory Structure
+
+```bash
+app/Http/Controllers/
+├── Auth/                 # Authentication controllers
+├── Core/                 # Core system controllers
+├── Contact/             # Contact management
+├── Mailgun/             # Email service integration
+├── Onboarding/          # User onboarding process
+└── User/                # User-specific controllers
+```
+
+## Common Controller Methods
+
+Most controllers implement these standard methods:
+- `index()` - List resources
+- `show()` - Display specific resource
+- `store()` - Create new resource
+- `update()` - Update existing resource
+- `destroy()` - Delete resource
+
+## Controller Best Practices
+
+1. **Input Validation**
+   - All input is validated using Laravel's validation system
+   - Custom validation rules are defined where needed
+
+2. **Authorization**
+   - Controllers use Laravel's authorization policies
+   - Role-based access control is implemented
+
+3. **Response Format**
+   All API responses follow this structure:
+   ```json
+   {
+     "success": true,
+     "data": {},
+     "message": "Operation successful"
+   }
+   ```
+
+4. **Error Handling**
+   - Consistent error responses
+   - Proper HTTP status codes
+   - Detailed error messages in development
+
+## Related Documentation
+
+- [Models](backend/models)
+- [Middleware](backend/middleware)
+- [Services](backend/services) 

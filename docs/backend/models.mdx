@@ -1,0 +1,212 @@
+---
+title: 'Models'
+description: 'Documentation for all Laravel models in the InStore Reviews system'
+---
+
+# Models
+
+This section documents all the database models in the InStore Reviews system, their relationships, and key attributes.
+
+## Core Models
+
+### Business Management
+
+#### `Business`
+The central model for business entities:
+- Manages business profiles
+- Handles business settings
+- Relationships:
+  - `locations` - HasMany `BusinessLocation`
+  - `users` - BelongsToMany `User`
+  - `qrMedia` - HasMany `QrMedia`
+
+#### `BusinessLocation`
+Represents physical business locations:
+- Location management
+- QR code assignments
+- Relationships:
+  - `business` - BelongsTo `Business`
+  - `qrMedia` - HasMany `QrMedia`
+  - `platforms` - HasMany `LocationPlatform`
+
+### QR Code System
+
+#### `QrMedia`
+Manages QR code media:
+- QR code generation
+- Template storage
+- Relationships:
+  - `business` - BelongsTo `Business`
+  - `location` - BelongsTo `BusinessLocation`
+  - `scans` - HasMany `QrScan`
+
+#### `QrScan`
+Tracks QR code scans:
+- Scan timestamps
+- User feedback
+- Analytics data
+- Relationships:
+  - `qrMedia` - BelongsTo `QrMedia`
+  - `comments` - HasMany `QrScanComment`
+  - `analytics` - HasOne `QrScanSettingAnalytic`
+
+#### `QrGroup`
+Organizes QR codes into groups:
+- Group management
+- Access control
+- Relationships:
+  - `qrMedia` - HasMany `QrMedia`
+  - `business` - BelongsTo `Business`
+
+### User Management
+
+#### `User`
+Manages user accounts:
+- Authentication
+- Profile management
+- Permissions
+- Relationships:
+  - `businesses` - BelongsToMany `Business`
+  - `roles` - BelongsToMany `Role`
+  - `locations` - BelongsToMany `BusinessLocation`
+
+#### `Role`
+Defines user roles:
+- Role assignments
+- Permission sets
+- Relationships:
+  - `permissions` - BelongsToMany `Permission`
+  - `users` - BelongsToMany `User`
+
+#### `Permission`
+Manages system permissions:
+- Access control
+- Feature gates
+- Relationships:
+  - `roles` - BelongsToMany `Role`
+
+### Notification System
+
+#### `NotificationQueue`
+Manages notification delivery:
+- SMS queuing
+- Email scheduling
+- Status tracking
+
+#### `NotificationAlert`
+Handles alert configurations:
+- Alert rules
+- Delivery preferences
+- Trigger conditions
+
+#### `NotificationMethod`
+Defines notification channels:
+- SMS
+- Email
+- Push notifications
+
+### Platform Integration
+
+#### `Platform`
+Manages external platform connections:
+- Social media
+- Review sites
+- Integration settings
+- Relationships:
+  - `locationPlatforms` - HasMany `LocationPlatform`
+
+#### `LocationPlatform`
+Links locations with platforms:
+- Platform-specific settings
+- Integration status
+- Relationships:
+  - `location` - BelongsTo `BusinessLocation`
+  - `platform` - BelongsTo `Platform`
+
+## Database Schema
+
+### Core Tables
+```sql
+businesses
+  id
+  name
+  settings (json)
+  created_at
+  updated_at
+
+business_locations
+  id
+  business_id
+  name
+  address
+  settings (json)
+  created_at
+  updated_at
+
+qr_media
+  id
+  business_id
+  location_id
+  template
+  settings (json)
+  created_at
+  updated_at
+```
+
+### User Tables
+```sql
+users
+  id
+  name
+  email
+  password
+  settings (json)
+  created_at
+  updated_at
+
+roles
+  id
+  name
+  created_at
+  updated_at
+
+permissions
+  id
+  name
+  created_at
+  updated_at
+```
+
+## Model Best Practices
+
+1. **Attribute Casting**
+   ```php
+   protected $casts = [
+       'settings' => 'array',
+       'is_active' => 'boolean',
+       'metadata' => 'json'
+   ];
+   ```
+
+2. **Hidden Attributes**
+   ```php
+   protected $hidden = [
+       'password',
+       'remember_token'
+   ];
+   ```
+
+3. **Fillable Fields**
+   ```php
+   protected $fillable = [
+       'name',
+       'email',
+       'settings'
+   ];
+   ```
+
+## Related Documentation
+
+- [Controllers](backend/controllers)
+- [Migrations](backend/migrations)
+- [Relationships](backend/relationships) 

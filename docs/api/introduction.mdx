@@ -1,0 +1,203 @@
+---
+title: 'API Reference'
+description: 'Complete API documentation for the InStore Reviews system'
+---
+
+# API Reference
+
+The InStore Reviews API is organized around REST principles. Our API accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes and authentication.
+
+## Base URL
+
+```bash
+# Development
+https://dev.instorereviews.com/api/v1
+
+# Production
+https://app.instorereviews.com/api/v1
+```
+
+## Authentication
+
+The API uses Bearer token authentication. Include the token in the Authorization header:
+
+```bash
+Authorization: Bearer your-token-here
+```
+
+## Response Format
+
+All API responses follow a standard format:
+
+```json
+{
+  "success": true,
+  "data": {
+    // Response data here
+  },
+  "message": "Operation successful"
+}
+```
+
+### Error Response Format
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "ERROR_CODE",
+    "message": "Error description"
+  }
+}
+```
+
+## Rate Limiting
+
+API requests are limited to:
+- 60 requests per minute for authenticated users
+- 30 requests per minute for unauthenticated users
+
+## Common HTTP Status Codes
+
+- `200` - Success
+- `201` - Created
+- `400` - Bad Request
+- `401` - Unauthorized
+- `403` - Forbidden
+- `404` - Not Found
+- `422` - Validation Error
+- `429` - Too Many Requests
+- `500` - Server Error
+
+## API Versioning
+
+The API version is included in the URL path. Current version is `v1`.
+
+## Available Endpoints
+
+### Authentication
+- [Login](api/auth/login)
+- [Register](api/auth/register)
+- [Reset Password](api/auth/reset-password)
+
+### Business Management
+- [Create Business](api/business/create)
+- [Update Business](api/business/update)
+- [List Businesses](api/business/list)
+
+### QR Code Management
+- [Generate QR Code](api/qr/generate)
+- [Update QR Code](api/qr/update)
+- [List QR Codes](api/qr/list)
+
+### Feedback Management
+- [Submit Feedback](api/feedback/submit)
+- [Retrieve Feedback](api/feedback/retrieve)
+- [Analytics](api/feedback/analytics)
+
+### Location Management
+- [Create Location](api/location/create)
+- [Update Location](api/location/update)
+- [List Locations](api/location/list)
+
+### User Management
+- [Create User](api/user/create)
+- [Update User](api/user/update)
+- [List Users](api/user/list)
+
+## Using the API
+
+### Making Requests
+
+```bash
+# Example GET request
+curl -X GET \
+  https://dev.instorereviews.com/api/v1/businesses \
+  -H 'Authorization: Bearer your-token-here'
+
+# Example POST request
+curl -X POST \
+  https://dev.instorereviews.com/api/v1/qr/generate \
+  -H 'Authorization: Bearer your-token-here' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "business_id": 123,
+    "location_id": 456,
+    "template": "modern"
+  }'
+```
+
+### Pagination
+
+List endpoints support pagination with these parameters:
+- `page` - Page number (default: 1)
+- `per_page` - Items per page (default: 15, max: 100)
+
+```json
+{
+  "success": true,
+  "data": [...],
+  "meta": {
+    "current_page": 1,
+    "last_page": 5,
+    "per_page": 15,
+    "total": 75
+  }
+}
+```
+
+### Filtering
+
+Many endpoints support filtering using query parameters:
+
+```bash
+# Example: Filter by date range
+GET /api/v1/feedback?start_date=2024-01-01&end_date=2024-01-31
+
+# Example: Filter by status
+GET /api/v1/qr-codes?status=active
+```
+
+### Sorting
+
+Use the `sort` parameter to sort results:
+
+```bash
+# Sort by creation date descending
+GET /api/v1/feedback?sort=-created_at
+
+# Sort by name ascending
+GET /api/v1/businesses?sort=name
+```
+
+## Security
+
+1. **SSL/TLS**
+   - All API requests must be made over HTTPS
+   - Non-HTTPS requests will be rejected
+
+2. **CORS**
+   - Cross-Origin Resource Sharing is enabled for specific domains
+   - Contact support to whitelist your domain
+
+3. **API Keys**
+   - Keep your API keys secure
+   - Rotate keys periodically
+   - Never expose keys in client-side code
+
+## Best Practices
+
+1. **Rate Limiting**
+   - Implement exponential backoff
+   - Cache responses when possible
+   - Monitor your usage
+
+2. **Error Handling**
+   - Always check the `success` field
+   - Handle HTTP status codes appropriately
+   - Log and monitor errors
+
+3. **Validation**
+   - Validate input before sending
+   - Check response data structure
+   - Handle validation errors gracefully 

@@ -1,0 +1,205 @@
+---
+title: 'Vue Components'
+description: 'Documentation for Vue 3 components in the InStore Reviews system'
+---
+
+# Vue Components Overview
+
+This section documents the Vue 3 components used throughout the InStore Reviews system. Our components are built using the Composition API and follow modern Vue best practices.
+
+## Core Components
+
+### QR Code System
+
+#### `QrLandingPage.vue`
+The main landing page for QR code scans:
+- Displays feedback form
+- Handles customer responses
+- Manages review submission
+
+```vue
+<template>
+  <!-- QR code landing page template -->
+</template>
+
+<script setup>
+// Component logic using Composition API
+</script>
+```
+
+### UI Components
+
+#### `CustomButton.vue`
+Reusable button component:
+- Consistent styling
+- Loading states
+- Various sizes and variants
+
+#### `CustomSelect.vue`
+Enhanced select component:
+- Search functionality
+- Custom styling
+- Multiple selection support
+
+#### `CustomAutoComplete.vue`
+Autocomplete input component:
+- Dynamic suggestions
+- Keyboard navigation
+- Custom filtering
+
+### Form Components
+
+#### `CustomInputSearch.vue`
+Search input component:
+- Debounced input
+- Clear button
+- Search history
+
+#### `DatePickerMenu.vue`
+Date selection component:
+- Range selection
+- Custom date formatting
+- Validation rules
+
+#### `TermsAndConditionsCheckbox.vue`
+Terms acceptance component:
+- Legal text display
+- Validation
+- Error states
+
+### Feedback Components
+
+#### `SnackbarHandler.vue`
+Toast notification system:
+- Success/error states
+- Auto-dismiss
+- Queue management
+
+#### `ModalHandler.vue`
+Modal dialog manager:
+- Multiple modal support
+- Backdrop handling
+- Animation control
+
+### Loading States
+
+#### `LoaderIcon.vue`
+Loading indicator:
+- Animated spinner
+- Size variants
+- Color customization
+
+#### `CardLoader.vue`
+Skeleton loading component:
+- Content placeholders
+- Animated states
+- Responsive design
+
+### Maps Integration
+
+#### `GoogleMapView.vue`
+Google Maps component:
+- Location display
+- Marker management
+- Custom styling
+
+## Component Organization
+
+```bash
+resources/js/components/
+├── alerts/           # Alert and notification components
+├── dialogs/          # Modal and dialog components
+├── fields/           # Form field components
+└── icons/            # Icon components
+```
+
+## Common Props Pattern
+
+```typescript
+// Common props interface
+interface CommonProps {
+  loading?: boolean
+  disabled?: boolean
+  error?: string
+  size?: 'sm' | 'md' | 'lg'
+  variant?: 'primary' | 'secondary' | 'danger'
+}
+```
+
+## Component Best Practices
+
+### 1. Composition API Usage
+```vue
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+
+// Component state
+const isLoading = ref(false)
+
+// Computed properties
+const buttonText = computed(() => 
+  isLoading.value ? 'Loading...' : 'Submit'
+)
+
+// Lifecycle hooks
+onMounted(() => {
+  // Initialization logic
+})
+</script>
+```
+
+### 2. Event Handling
+```vue
+<template>
+  <button @click="handleClick">
+    {{ buttonText }}
+  </button>
+</template>
+
+<script setup>
+const emit = defineEmits(['click'])
+
+const handleClick = (event) => {
+  emit('click', event)
+}
+</script>
+```
+
+### 3. Props Validation
+```vue
+<script setup>
+const props = defineProps({
+  variant: {
+    type: String,
+    default: 'primary',
+    validator: (value) => 
+      ['primary', 'secondary', 'danger'].includes(value)
+  }
+})
+</script>
+```
+
+## State Management Integration
+
+Components interact with the Vuex store using composables:
+
+```typescript
+// useStore composable
+import { useStore } from 'vuex'
+
+export function useCustomStore() {
+  const store = useStore()
+  
+  return {
+    getData: () => store.getters['module/getData'],
+    updateData: (payload) => 
+      store.dispatch('module/updateData', payload)
+  }
+}
+```
+
+## Related Documentation
+
+- [State Management](frontend/state/store)
+- [Component Styling](frontend/components/styling)
+- [Form Handling](frontend/components/forms) 

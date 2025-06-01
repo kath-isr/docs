@@ -1,0 +1,104 @@
+{
+    "$schema": "https://mintlify.com/docs.json",
+    "name": "InStore Reviews Documentation",
+    "logo": {
+        "light": "/logo/light.png",
+        "dark": "/logo/dark.png"
+    },
+    "favicon": "/favicon.png",
+    "colors": {
+        "primary": "#0069ED",
+        "light": "#4D9CFF",
+        "dark": "#0050B4"
+    },
+    "navigation": {
+        "tabs": [
+            {
+                "tab": "Getting Started",
+                "groups": [
+                    {
+                        "group": "Introduction",
+                        "pages": [
+                            "introduction",
+                            "installation",
+                            "configuration"
+                        ]
+                    }
+                ]
+            },
+            {
+                "tab": "Backend (Laravel)",
+                "groups": [
+                    {
+                        "group": "Core Components",
+                        "pages": [
+                            "backend/models",
+                            "backend/controllers",
+                            "backend/middleware",
+                            "backend/services"
+                        ]
+                    },
+                    {
+                        "group": "Database",
+                        "pages": [
+                            "backend/migrations",
+                            "backend/seeders",
+                            "backend/relationships"
+                        ]
+                    },
+                    {
+                        "group": "Features",
+                        "pages": [
+                            "backend/qr-system",
+                            "backend/sms-notifications",
+                            "backend/social-integration"
+                        ]
+                    }
+                ]
+            },
+            {
+                "tab": "Frontend (Vue 3)",
+                "groups": [
+                    {
+                        "group": "Components",
+                        "pages": [
+                            "frontend/components/overview",
+                            "frontend/components/forms",
+                            "frontend/components/feedback",
+                            "frontend/components/dashboard"
+                        ]
+                    },
+                    {
+                        "group": "State Management",
+                        "pages": [
+                            "frontend/state/store",
+                            "frontend/state/actions",
+                            "frontend/state/mutations"
+                        ]
+                    }
+                ]
+            },
+            {
+                "tab": "API Reference",
+                "groups": [
+                    {
+                        "group": "Authentication",
+                        "pages": [
+                            "api/auth/login",
+                            "api/auth/register",
+                            "api/auth/reset-password"
+                        ]
+                    },
+                    {
+                        "group": "Feedback Management",
+                        "pages": [
+                            "api/feedback/submit",
+                            "api/feedback/retrieve",
+                            "api/feedback/analytics"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

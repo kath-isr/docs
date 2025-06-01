@@ -1,0 +1,148 @@
+---
+title: 'Submit Feedback'
+description: 'API endpoint for submitting customer feedback'
+---
+
+# Submit Feedback
+
+Submit customer feedback through a QR code scan.
+
+## Endpoint
+
+```bash
+POST /api/v1/feedback/submit
+```
+
+## Authentication
+
+This endpoint does not require authentication as it's used by customers scanning QR codes.
+
+## Request Body
+
+```json
+{
+  "qr_code_id": "string",       // Required: The QR code identifier
+  "rating": number,             // Required: Rating from 1-5
+  "comment": "string",          // Optional: Customer comment
+  "customer_name": "string",    // Optional: Customer name
+  "customer_email": "string",   // Optional: Customer email
+  "customer_phone": "string",   // Optional: Customer phone
+  "metadata": {                 // Optional: Additional data
+    "browser": "string",
+    "device": "string",
+    "location": {
+      "latitude": number,
+      "longitude": number
+    }
+  }
+}
+```
+
+## Response
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "feedback_id": "string",
+    "qr_code_id": "string",
+    "rating": number,
+    "status": "submitted",
+    "created_at": "datetime",
+    "share_url": "string"      // URL for social sharing (if rating > 3)
+  },
+  "message": "Feedback submitted successfully"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_QR_CODE",
+    "message": "The provided QR code is invalid or expired"
+  }
+}
+```
+
+## Example
+
+### cURL
+
+```bash
+curl -X POST \
+  https://dev.instorereviews.com/api/v1/feedback/submit \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "qr_code_id": "qr_123456",
+    "rating": 5,
+    "comment": "Great service!",
+    "customer_name": "John Doe",
+    "customer_email": "john@example.com"
+  }'
+```
+
+### JavaScript
+
+```javascript
+const response = await fetch('https://dev.instorereviews.com/api/v1/feedback/submit', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    qr_code_id: 'qr_123456',
+    rating: 5,
+    comment: 'Great service!',
+    customer_name: 'John Doe',
+    customer_email: 'john@example.com'
+  })
+});
+
+const data = await response.json();
+```
+
+## Business Rules
+
+1. **Rating Validation**
+   - Must be between 1 and 5
+   - Decimals are rounded to nearest integer
+
+2. **QR Code Validation**
+   - Must be active and not expired
+   - Must be associated with an active business/location
+
+3. **Notification Triggers**
+   - Rating ≤ 2: Immediate SMS alert to business
+   - Rating ≥ 4: Social sharing option enabled
+   - All ratings: Email notification to business
+
+4. **Rate Limiting**
+   - 3 submissions per IP address per minute
+   - 10 submissions per QR code per minute
+
+## Error Codes
+
+| Code | Description |
+|------|-------------|
+| `INVALID_QR_CODE` | QR code not found or expired |
+| `INVALID_RATING` | Rating outside allowed range |
+| `RATE_LIMITED` | Too many submissions |
+| `VALIDATION_ERROR` | Invalid input data |
+
+## Notes
+
+- Customer contact information (email/phone) is optional but encouraged
+- Metadata is automatically collected when available
+- Response includes social sharing URL for positive reviews
+- Business notifications are sent based on configured preferences
+
+## Related Endpoints
+
+- [Retrieve Feedback](api/feedback/retrieve)
+- [Feedback Analytics](api/feedback/analytics)
+- [Update Feedback](api/feedback/update) 
