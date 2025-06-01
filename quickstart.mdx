@@ -1,86 +1,111 @@
 ---
 title: 'Quickstart'
-description: 'Get started with our platform in minutes'
+description: 'Get started with InStore Reviews'
 ---
 
-## Getting Started
-
-This guide will help you get up and running quickly with our platform.
-
-### Installation
+## Prerequisites
 
 <AccordionGroup>
   <Accordion icon="download" title="System Requirements">
     Before you begin, make sure you have:
-    - Node.js 18 or higher installed
-    - npm or yarn package manager
-    - Git for version control
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Installation Steps">
-    1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/yourproject
-    ```
-
-    2. Install dependencies:
-    ```bash
-    npm install
-    ```
-
-    3. Start the development server:
-    ```bash
-    npm run dev
-    ```
+    - PHP 8.1 or higher
+    - Node.js and npm
+    - Composer
+    - MySQL/MariaDB
+    - [VSCode](https://code.visualstudio.com/) (recommended)
   </Accordion>
 </AccordionGroup>
 
-### Basic Usage
+## Installation
 
-<AccordionGroup>
-<Accordion icon="wand-magic-sparkles" title="Quick Setup">
-  Follow these steps to set up your first project:
-  1. Configure your environment
-  2. Set up your API keys
-  3. Create your first resource
-</Accordion>
-<Accordion icon="rocket" title="Deploy">
-  When you're ready to deploy:
-  1. Build your project
-  2. Test your changes
-  3. Deploy to production
-</Accordion>
-</AccordionGroup>
+### 1. Backend Setup
+
+First, set up the Laravel backend:
+
+```bash
+# Install PHP dependencies
+composer install
+
+# Create environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Run database migrations and seeders
+php artisan migrate:fresh --seed
+
+# Start Laravel development server
+php artisan serve
+```
+
+### 2. Frontend Setup
+
+In a new terminal, set up the Vue.js frontend:
+
+```bash
+# Install npm dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+## Project Structure
+
+Our application is built with Laravel and Vue.js:
+
+<CardGroup>
+<Card title="Backend (Laravel)" icon="server" href="/api-reference/introduction">
+  - Laravel 10.x Framework
+  - Sanctum Authentication
+  - RESTful API endpoints
+</Card>
+
+<Card
+  title="Frontend (Vue 3)"
+  icon="desktop"
+  href="/essentials/code"
+>
+  - Vue 3 with Composition API
+  - Vuetify 3.7.4
+  - Vue Router & Pinia
+</Card>
+
+<Card
+  title="Features"
+  icon="stars"
+  href="/essentials/navigation"
+>
+  - QR Code Generation
+  - Google Maps Integration
+  - Phone Number Verification
+</Card>
+
+<Card
+  title="Development Tools"
+  icon="wrench"
+  href="/essentials/reusable-snippets"
+>
+  - ESLint & Prettier
+  - PHP CodeSniffer
+  - Hot Module Reloading
+</Card>
+</CardGroup>
+
+## Key Features
+
+- **Authentication**: Secure user authentication system
+- **Review Management**: Create and manage store reviews
+- **QR Code System**: Generate and manage QR codes for stores
+- **Location Services**: Google Maps integration for store locations
+- **Phone Verification**: SMS verification via Twilio
+- **Image Processing**: Handle store images and QR codes
 
 ## Next Steps
 
-Explore these topics to learn more about our platform:
-
-<CardGroup>
-<Card title="Core Concepts" icon="book" href="/essentials/markdown">
-  Learn about the fundamental concepts and architecture.
-</Card>
-
-<Card
-  title="API Guide"
-  icon="code"
-  href="/essentials/code"
->
-  Explore our API documentation and examples.
-</Card>
-
-<Card
-  title="Best Practices"
-  icon="star"
-  href="/essentials/images"
->
-  Learn about recommended practices and patterns.
-</Card>
-
-<Card
-  title="Advanced Features"
-  icon="puzzle-piece"
-  href="/essentials/reusable-snippets"
->
-  Discover advanced features and customizations.
-</Card>
-</CardGroup>
+After installation, you can:
+- Set up your development environment with VSCode and recommended extensions
+- Configure your database settings in `.env`
+- Explore the API endpoints in the API Reference section
+- Check out the component documentation
