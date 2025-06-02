@@ -87,6 +87,30 @@ If the deployment is successful, you should see the following:
 
 We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
 
+## Cursor Rules for instorereviews_V0.2
+
+When working with the `instorereviews_V0.2` documentation, please follow these cursor rules:
+
+<CodeGroup>
+```json cursor-rules
+{
+  "references": {
+    "instorereviews_V0.2": {
+      "path": "./instorereviews_V0.2",
+      "description": "Documentation for in-store reviews version 0.2",
+      "include": ["**/*.mdx", "**/*.md"],
+      "exclude": ["**/node_modules/**"]
+    }
+  }
+}
+```
+</CodeGroup>
+
+These cursor rules ensure that:
+- All documentation references point to the correct version (V0.2)
+- Only MDX and MD files are included in the documentation
+- Node modules are properly excluded from documentation scanning
+
 ## Troubleshooting
 
 <AccordionGroup>

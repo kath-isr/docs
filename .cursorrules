@@ -1,0 +1,10 @@
+{
+  "references": {
+    "instorereviews_V0.2": {
+      "path": "./instorereviews_V0.2",
+      "description": "Documentation for in-store reviews version 0.2",
+      "include": ["**/*.mdx", "**/*.md"],
+      "exclude": ["**/node_modules/**"]
+    }
+  }
+} 
